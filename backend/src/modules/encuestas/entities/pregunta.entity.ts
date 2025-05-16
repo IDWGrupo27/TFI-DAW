@@ -1,0 +1,26 @@
+import { Column, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Encuesta } from "./encuestas.entity";
+import { Exclude } from "class-transformer";
+import { Opcion } from "./opcion.entity";
+import { TipoRespuestaEnum } from "../enums/tipo-respuesta.enums";
+
+
+export class Pregunta {
+
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @Column()
+    numero: number;
+
+    @Column({type: 'enum', enum: TipoRespuestaEnum})
+    tipo: TipoRespuestaEnum
+
+    @ManyToOne(()=> Encuesta)
+    @JoinColumn({name: 'id_encuesta'})
+    @Exclude()
+    encuesta: Encuesta;
+
+    @OneToMany(()=> Opcion, (opcion)=> opcion.pregunta, {cascade: ['insert']})
+    opciones: Opcion[];
+}
