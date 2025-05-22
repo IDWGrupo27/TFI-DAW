@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { EncuestasModule } from './modules/encuestas/encuestas.module';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
@@ -16,17 +16,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get<string>('database.host'),
-        port: configService.get<number>('database.port'),
-        username: configService.get<string>('database.username'),
-        password: configService.get<string>('database.password'),
-        database: configService.get<string>('database.name'),
-        synchronize: false,
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: 'root',
+        database: 'encuestas',
+        synchronize: true,
         autoLoadEntities: true,
-        logging: configService.get('database.logging'),
-        logger: configService.get('database.logger'),
-      })
-    })
+        logging: true,
+        logger: 'advanced-console',
+      }),
+    }),
+    EncuestasModule,
   ],
   controllers: [],
   providers: [],

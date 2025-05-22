@@ -1,10 +1,11 @@
-import { Column, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Encuesta } from "./encuestas.entity";
 import { Exclude } from "class-transformer";
 import { Opcion } from "./opcion.entity";
 import { TipoRespuestaEnum } from "../enums/tipo-respuesta.enums";
 
 
+@Entity({ name: 'preguntas' })
 export class Pregunta {
 
     @PrimaryGeneratedColumn()
@@ -12,6 +13,9 @@ export class Pregunta {
 
     @Column()
     numero: number;
+
+    @Column()
+    texto: string;
 
     @Column({type: 'enum', enum: TipoRespuestaEnum})
     tipo: TipoRespuestaEnum
