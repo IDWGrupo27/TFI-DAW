@@ -1,0 +1,78 @@
+.crear-encuesta-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ajusta según tus necesidades */
+}
+
+.crear-encuesta-card {
+  width: 90%; /* O el ancho que prefieras */
+  max-width: 800px; /* Para que no se estire demasiado en pantallas grandes */
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #fafafa;
+}
+
+.crear-encuesta-header {
+  border-top: 8px solid #04166a; /* Color de la tarjeta de inicio */
+  padding: 42px 24px;
+  border-radius: 16px 16px 0 0; /* Bordes redondeados solo en la parte superior */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
+  justify-content: center;
+}
+
+.crear-encuesta-title {
+  font-size: 32px; /* Un poco más pequeño que el título de inicio */
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.5px;
+  color: #333;
+}
+
+.crear-encuesta-content {
+  padding: 24px;
+  background-color: #fafafa;
+  border-left: 8px solid #667eea; /* Color de la tarjeta de inicio */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 16px 16px; /* Bordes redondeados solo en la parte inferior */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.pregunta-container {
+  margin-bottom: 20px;
+}
+
+.pregunta-card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05); /* Sombra más suave para las preguntas */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pregunta-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.opcion-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.opcion-input {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.crear-encuesta-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}

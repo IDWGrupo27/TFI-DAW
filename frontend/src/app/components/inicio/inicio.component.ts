@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -11,7 +11,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
+  constructor(private router: Router) { }
   onComenzar() {
     console.log('Comenzando creación de encuesta...');
+    this.router.navigate(['/crear-encuesta']); 
   }
 }
