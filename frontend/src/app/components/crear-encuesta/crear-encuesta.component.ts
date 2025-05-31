@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
     styleUrl: './crear-encuesta.component.css',
   imports: [
     CommonModule,
-    ReactiveFormsModule, // ¡Importante!
+    ReactiveFormsModule, 
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -36,7 +36,7 @@ export class CrearEncuestaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.agregarPregunta(); // Agregar una pregunta inicial al cargar el componente
+    this.agregarPregunta(); 
   }
 
   get preguntas(): FormArray {
@@ -73,7 +73,7 @@ export class CrearEncuestaComponent implements OnInit {
   onSubmit() {
     if (this.encuestaForm.valid) {
       console.log('Formulario de encuesta:', this.encuestaForm.value);
-      // Aquí iría la lógica para enviar los datos al backend
+      
     } else {
       this.encuestaForm.markAllAsTouched();
     }
