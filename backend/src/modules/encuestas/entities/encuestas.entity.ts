@@ -1,6 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Pregunta } from './pregunta.entity';
+import { Respuesta } from './respuestas.entity';
 
 @Entity({ name: 'encuestas' })
 export class Encuesta {
@@ -14,6 +15,10 @@ export class Encuesta {
     cascade: ['insert'],
   })
   preguntas: Pregunta[];
+
+  @OneToMany(() => Respuesta, (respuesta) => respuesta.encuesta, {
+  })
+  respuestas: Respuesta[];
 
   @Column({ name: 'codigo_respuesta' })
   codigoRespuesta: string;
