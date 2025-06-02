@@ -4,9 +4,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Pregunta } from './pregunta.entity';
+import { Respuesta_opciones } from './respuesta-opciones.entity';
 
 @Entity({ name: 'opciones' })
 export class Opcion {
@@ -23,4 +25,8 @@ export class Opcion {
   @JoinColumn({ name: 'id_preguta' })
   @Exclude()
   pregunta: Pregunta;
+
+  @OneToMany(() => Respuesta_opciones, (respuesta_opciones) => respuesta_opciones.opcion)
+  respuestas_opciones: Respuesta_opciones[];
+  
 }
