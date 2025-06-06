@@ -1,7 +1,7 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Exclude } from "class-transformer";
+import { Opcion } from "../../encuestas/entities/opcion.entity";
 import { Respuesta } from "./respuestas.entity";
-import { Opcion } from "./opcion.entity";
 
 
 @Entity({ name: 'respuestas_opciones'})
