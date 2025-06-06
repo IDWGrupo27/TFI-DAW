@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EncuestasModule } from './modules/encuestas/encuestas.module';
 import configuration from './config/configuration';
+import { RespuestasModule } from './modules/respuestas/respuestas.modules';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import configuration from './config/configuration';
       }),
     }),
     EncuestasModule,
+    RespuestasModule,
   ],
   controllers: [],
   providers: [],

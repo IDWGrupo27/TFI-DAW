@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Exclude } from "class-transformer";
+import { Pregunta } from "../../encuestas/entities/pregunta.entity";
 import { Respuesta } from "./respuestas.entity";
-import { Pregunta } from "./pregunta.entity";
 
 
 @Entity({ name: 'respuestas_abiertas'})

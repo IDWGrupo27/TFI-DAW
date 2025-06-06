@@ -3,6 +3,7 @@ import { Encuesta } from '../entities/encuestas.entity';
 import { Pregunta } from '../entities/pregunta.entity';
 import { Opcion } from '../entities/opcion.entity';
 import { DeepPartial, Repository } from 'typeorm';
+import { v4 } from 'uuid';
 
 export class EncuestasService {
   constructor(
@@ -23,7 +24,11 @@ export class EncuestasService {
   }
 
   async createEncuesta(encuesta: DeepPartial<Encuesta>) {
-    const newEncuesta = this.encuestaRepository.create(encuesta);
+    const newEncuesta = this.encuestaRepository.create(
+      {...encuesta,
+        codigoRespuesta: v4(),
+        codigoResultados: v4()
+      });
     return this.encuestaRepository.save(newEncuesta);
   }
 

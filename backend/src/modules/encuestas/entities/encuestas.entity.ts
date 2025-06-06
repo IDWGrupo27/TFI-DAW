@@ -1,7 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Pregunta } from './pregunta.entity';
-import { Respuesta } from './respuestas.entity';
+import { Respuesta } from 'src/modules/respuestas/entitis/respuestas.entity';
 
 @Entity({ name: 'encuestas' })
 export class Encuesta {

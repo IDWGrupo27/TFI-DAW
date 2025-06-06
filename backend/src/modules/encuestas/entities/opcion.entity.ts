@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Pregunta } from './pregunta.entity';
-import { Respuesta_opciones } from './respuesta-opciones.entity';
+import { Respuesta_opciones } from '../../respuestas/entitis/respuesta-opciones.entity';
 
 @Entity({ name: 'opciones' })
 export class Opcion {

@@ -3,7 +3,7 @@ import { Encuesta } from "./encuestas.entity";
 import { Exclude } from "class-transformer";
 import { Opcion } from "./opcion.entity";
 import { TipoRespuestaEnum } from "../enums/tipo-respuesta.enums";
-import { Respuesta_abierta } from "./respuestas-abiertas.entity";
+import { Respuesta_abierta } from "../../respuestas/entitis/respuestas-abiertas.entity";
 
 
 @Entity({ name: 'preguntas' })
