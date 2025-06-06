@@ -8,6 +8,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { tiposPreguntaPresentacion, TiposRespuestaEnum } from '../../enums/tipos-pregunta.enum';
+import { CreateOpcionDTO } from '../../interfaces/create-opcion.dto';
+import { ConfirmationService } from '../../services/confirmation.service';
 
 @Component({
   selector: 'app-crear-encuesta',
@@ -28,15 +31,17 @@ import { CommonModule } from '@angular/common';
 export class CrearEncuestaComponent implements OnInit {
   encuestaForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private confirmationService: ConfirmationService) {
     this.encuestaForm = this.fb.group({
       titulo: ['', Validators.required],
-      preguntas: this.fb.array([])
+      preguntas: this.fb.array([]),
     });
   }
 
   ngOnInit(): void {
-    this.agregarPregunta(); 
+    if (this.preguntas.length === 0) {
+      this.agregarPregunta(); 
+    }
   }
 
   get preguntas(): FormArray {
@@ -46,9 +51,10 @@ export class CrearEncuestaComponent implements OnInit {
   agregarPregunta() {
     const preguntaForm = this.fb.group({
       texto: ['', Validators.required],
-      tipo: ['abierta'],
+      //tipo: ['abierta'],
+      tipo: this.fb.control<TiposRespuestaEnum | null>(null, Validators.required),
       obligatoria: [false],
-      opciones: this.fb.array([])
+      opciones: this.fb.array([]) 
     });
     this.preguntas.push(preguntaForm);
   }
@@ -72,10 +78,29 @@ export class CrearEncuestaComponent implements OnInit {
 
   onSubmit() {
     if (this.encuestaForm.valid) {
-      console.log('Formulario de encuesta:', this.encuestaForm.value);
-      
+      this.confirmationService.confirmar('Confirma la operacion?', 'CONFIRMACION')
+      .subscribe(resultado => {
+        if (resultado) {
+          console.log('Confirmado!');
+          console.log('Formulario de encuesta:', this.encuestaForm.value);
+        } else {
+          console.log('Cancelado!')
+        }
+      })
     } else {
       this.encuestaForm.markAllAsTouched();
     }
   }
+
+  getTipoPregunta(): {
+    tipo: TiposRespuestaEnum,
+    presentacion: string,
+  }[] {
+    return tiposPreguntaPresentacion
+  };
+
+  opcionTipoPregunta(tipo: string): boolean {
+    return tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE' || tipo === 'OPCION_MULTIPLE_SELECCION_MULTIPLE'
+  }
+
 }
