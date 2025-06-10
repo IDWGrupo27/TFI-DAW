@@ -26,7 +26,9 @@ export class Opcion {
   @Exclude()
   pregunta: Pregunta;
 
-  @OneToMany(() => Respuesta_opciones, (respuesta_opciones) => respuesta_opciones.opcion)
+  @OneToMany(
+    () => Respuesta_opciones,
+    (respuesta_opciones) => respuesta_opciones.opcion,
+  )
   respuestas_opciones: Respuesta_opciones[];
-  
 }

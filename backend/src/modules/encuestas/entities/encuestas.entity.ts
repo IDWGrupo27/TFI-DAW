@@ -16,8 +16,7 @@ export class Encuesta {
   })
   preguntas: Pregunta[];
 
-  @OneToMany(() => Respuesta, (respuesta) => respuesta.encuesta, {
-  })
+  @OneToMany(() => Respuesta, (respuesta) => respuesta.encuesta, {})
   respuestas: Respuesta[];
 
   @Column({ name: 'codigo_respuesta' })

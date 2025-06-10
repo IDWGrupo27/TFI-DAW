@@ -24,11 +24,11 @@ export class EncuestasService {
   }
 
   async createEncuesta(encuesta: DeepPartial<Encuesta>) {
-    const newEncuesta = this.encuestaRepository.create(
-      {...encuesta,
-        codigoRespuesta: v4(),
-        codigoResultados: v4()
-      });
+    const newEncuesta = this.encuestaRepository.create({
+      ...encuesta,
+      codigoRespuesta: v4(),
+      codigoResultados: v4(),
+    });
     return this.encuestaRepository.save(newEncuesta);
   }
 

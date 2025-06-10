@@ -1,8 +1,16 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
-import { TipoRespuestaEnum } from "../enums/tipo-respuesta.enums";
-import { CreateOpcionDTO } from "./create-opcion.dto";
-import { Type } from "class-transformer";
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { TipoRespuestaEnum } from '../enums/tipo-respuesta.enums';
+import { CreateOpcionDTO } from './create-opcion.dto';
+import { Type } from 'class-transformer';
 
 export class CreatePreguntaDTO {
   @ApiProperty()

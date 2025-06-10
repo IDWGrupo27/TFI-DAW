@@ -17,15 +17,20 @@ import { RespuestasModule } from './modules/respuestas/respuestas.modules';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: 'root',
-        database: 'encuestas',
-        synchronize: true,
+        host: configService.get<string>('DB_HOST', 'localhost'),
+        port: Number(configService.get<string>('DB_PORT', '5432')),
+        username: configService.get<string>('DB_USER', 'postgres'),
+        password: configService.get<string>('DB_PASSWORD', 'root'),
+        database: configService.get<string>('DB_NAME', 'encuestas'),
+        synchronize: true, // ojo, solo desarrollo
         autoLoadEntities: true,
-        logging: true,
-        logger: 'advanced-console',
+        logging: configService.get<string>('DB_LOGGING', 'false') === 'true',
+        logger: 'advanced-console' as
+          | 'advanced-console'
+          | 'debug'
+          | 'simple-console'
+          | 'formatted-console'
+          | 'file',
       }),
     }),
     EncuestasModule,
