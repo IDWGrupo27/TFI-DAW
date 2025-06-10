@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,10 @@ import { CommonModule } from '@angular/common';
 import { tiposPreguntaPresentacion, TiposRespuestaEnum } from '../../enums/tipos-pregunta.enum';
 import { CreateOpcionDTO } from '../../interfaces/create-opcion.dto';
 import { ConfirmationService } from '../../services/confirmation.service';
+import { CreateEncuestaDTO } from '../../interfaces/create-encuesta.dto';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { EncuestasService } from '../../services/encuestas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-encuesta',
@@ -26,14 +30,24 @@ import { ConfirmationService } from '../../services/confirmation.service';
     MatCheckboxModule,
     MatButtonModule,
     MatIconModule,
+    MatSnackBarModule
   ]
 })
 export class CrearEncuestaComponent implements OnInit {
   encuestaForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private confirmationService: ConfirmationService) {
+  private encuestaService: EncuestasService = inject(EncuestasService)
+
+  private confirmationService: ConfirmationService = inject(ConfirmationService)
+
+  private router: Router = inject(Router);
+
+  constructor(
+    private fb: FormBuilder,  
+    private snackBar: MatSnackBar
+  ) {
     this.encuestaForm = this.fb.group({
-      titulo: ['', Validators.required],
+      nombre: ['', Validators.required],
       preguntas: this.fb.array([]),
     });
   }
@@ -51,9 +65,7 @@ export class CrearEncuestaComponent implements OnInit {
   agregarPregunta() {
     const preguntaForm = this.fb.group({
       texto: ['', Validators.required],
-      //tipo: ['abierta'],
       tipo: this.fb.control<TiposRespuestaEnum | null>(null, Validators.required),
-      obligatoria: [false],
       opciones: this.fb.array([]) 
     });
     this.preguntas.push(preguntaForm);
@@ -81,8 +93,51 @@ export class CrearEncuestaComponent implements OnInit {
       this.confirmationService.confirmar('Confirma la operacion?', 'CONFIRMACION')
       .subscribe(resultado => {
         if (resultado) {
-          console.log('Confirmado!');
-          console.log('Formulario de encuesta:', this.encuestaForm.value);
+          
+          const encuesta: CreateEncuestaDTO = this.encuestaForm.value;
+
+          for (let i = 0; i < encuesta.preguntas.length; i++) {
+            const pregunta = encuesta.preguntas[i];
+            pregunta.numero = i + 1;
+
+            if (pregunta.opciones) {
+              for (let j = 0; j < pregunta.opciones.length; j++) {
+                pregunta.opciones[j].numero = j + 1;
+              }
+            }
+          }
+
+          this.encuestaService.crearEncuesta(encuesta).subscribe({
+            next: (res) => {
+              
+              this.snackBar.open('La encuesta se creó con éxito', 'Cerrar', {
+                duration: 3000,
+                panelClass: ['success-snackbar']
+              });
+
+              console.log(JSON.stringify(res, null, 2))
+              console.log("res.id: " + res.id)
+              console.log("res.codigoRespuesta: " + res.codigoRespuesta)
+              console.log("res.codigoResultados: " + res.codigoResultados)
+
+              this.router.navigateByUrl(
+                '/presentacion-enlaces?id-encuesta=' +
+                res.id +
+                '&codigo-respuesta=' +
+                res.codigoRespuesta +
+                '&codigo-resultados=' +
+                res.codigoResultados
+              );
+
+            },
+            error: (err) => {
+              this.snackBar.open('Error al crear encuesta', 'Cerrar', {
+                duration: 5000,
+                panelClass: ['error-snackbar']
+              });
+            }
+          })
+
         } else {
           console.log('Cancelado!')
         }

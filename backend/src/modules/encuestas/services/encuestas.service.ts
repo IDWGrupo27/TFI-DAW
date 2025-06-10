@@ -29,7 +29,13 @@ export class EncuestasService {
         codigoRespuesta: v4(),
         codigoResultados: v4()
       });
-    return this.encuestaRepository.save(newEncuesta);
+    const encuestaGuardada = await this.encuestaRepository.save(newEncuesta);
+    
+    return {
+      id: encuestaGuardada.id,
+      codigoRespuesta: encuestaGuardada.codigoRespuesta,
+      codigoResultados: encuestaGuardada.codigoResultados
+    }
   }
 
   async updateEncuesta(encuesta: DeepPartial<Encuesta>) {
