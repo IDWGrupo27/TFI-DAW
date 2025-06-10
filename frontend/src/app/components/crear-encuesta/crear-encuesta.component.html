@@ -8,8 +8,8 @@
         <div>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Título de la Encuesta</mat-label>
-            <input matInput placeholder="Ingrese el título de su encuesta" formControlName="titulo">
-            <mat-error *ngIf="encuestaForm.get('titulo')?.hasError('required')">El título es obligatorio</mat-error>
+            <input matInput placeholder="Ingrese el título de su encuesta" formControlName="nombre">
+            <mat-error *ngIf="encuestaForm.get('nombre')?.hasError('required')">El título es obligatorio</mat-error>
           </mat-form-field>
         </div>
 
@@ -58,7 +58,7 @@
                   <button mat-button color="primary" type="button" (click)="agregarOpcion(i)">Agregar Opción</button>
                 </div>
 
-                <mat-checkbox formControlName="obligatoria">Obligatoria</mat-checkbox>
+                <!--<mat-checkbox formControlName="obligatoria">Obligatoria</mat-checkbox>-->
 
                 <div class="pregunta-actions">
                   <button mat-icon-button color="accent" type="button" *ngIf="preguntas.controls.length > 1" (click)="eliminarPregunta(i)">
