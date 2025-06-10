@@ -29,7 +29,7 @@ import { RespuestasModule } from './modules/respuestas/respuestas.modules';
         /*host: 'localhost',
         port: 5432,
         username: 'postgres',
-        password: 'martin014256',
+        password: 'root',
         database: 'encuestas',
         synchronize: true,
         autoLoadEntities: true,
