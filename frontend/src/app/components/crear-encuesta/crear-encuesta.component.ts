@@ -115,6 +115,7 @@ export class CrearEncuestaComponent implements OnInit {
                 panelClass: ['success-snackbar']
               });
 
+              console.log(JSON.stringify(res, null, 2))
               console.log("res.id: " + res.id)
               console.log("res.codigoRespuesta: " + res.codigoRespuesta)
               console.log("res.codigoResultados: " + res.codigoResultados)

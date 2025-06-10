@@ -12,8 +12,12 @@ export class EncuestasController {
   }
 
   @Post()
-  createEncuesta(@Body() dto: CreateEncuestaDTO) {
-    return this.encuestasService.createEncuesta(dto);
+  async createEncuesta(@Body() dto: CreateEncuestaDTO): Promise<{
+    id: number;
+    codigoRespuesta: string;
+    codigoResultados: string;
+  }> {
+    return await this.encuestasService.createEncuesta(dto);
   }
 
   @Put()

@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,7 +16,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatFormFieldModule,
     MatListModule,
     MatExpansionModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule
   ],
   templateUrl: './presentacion-enlaces.component.html',
   styleUrl: './presentacion-enlaces.component.css'

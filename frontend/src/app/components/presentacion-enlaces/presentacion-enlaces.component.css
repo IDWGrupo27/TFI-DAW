@@ -25,12 +25,14 @@
 
 .enlace-card {
   margin-bottom: 24px;
+  border-left: 8px solid #667eea;
 }
 
 .enlace-card mat-card-title {
   display: flex;
   align-items: center;
   gap: 8px;
+  
 }
 
 .enlace-container {
