@@ -21,6 +21,11 @@ export class EncuestasService {
     }
    obtenerEncuestaPorIdYCodigo(id: number, codigoRespuesta: string): Observable<EncuestaDTO> {
   return this.httpClient.get<EncuestaDTO>(`/api/v1/encuestas/${id}/por-codigo/${codigoRespuesta}`);
+
+    }
+    enviarRespuestas(idEncuesta: number, respuestas: any[]): Observable<any> {
+  return this.httpClient.post(`/api/v1/respuestas-encuesta/${idEncuesta}`, respuestas);
 }
+
 
 }

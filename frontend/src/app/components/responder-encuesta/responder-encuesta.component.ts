@@ -89,39 +89,51 @@ export class ResponderEncuestaComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.formulario.invalid) {
-      this.formulario.markAllAsTouched();
-      return;
-    }
-
-    const respuestaPayload = {
-      respuestas: [] as any[]
-    };
-
-    this.encuesta.preguntas.forEach((pregunta: any, index: number) => {
-      const respuesta = this.respuestas.at(index).value;
-      if (pregunta.tipo === 'ABIERTA') {
-        respuestaPayload.respuestas.push({
-          preguntaId: pregunta.id,
-          texto: respuesta
-        });
-      } else if (pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE') {
-        respuestaPayload.respuestas.push({
-          preguntaId: pregunta.id,
-          opcionId: respuesta
-        });
-      } else if (pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_MULTIPLE') {
-        const opcionesElegidas = Object.entries(respuesta)
-          .filter(([_, seleccionado]) => seleccionado)
-          .map(([opcionId, _]) => Number(opcionId));
-        respuestaPayload.respuestas.push({
-          preguntaId: pregunta.id,
-          opcionIds: opcionesElegidas
-        });
-      }
-    });
-
-    console.log('Payload para enviar:', respuestaPayload);
-    // acá llamarías al servicio para guardar la respuesta
+  if (this.formulario.invalid) {
+    this.formulario.markAllAsTouched();
+    return;
   }
+
+  const respuestasParaEnviar: any[] = [];
+
+  this.encuesta.preguntas.forEach((pregunta: any, index: number) => {
+    const valorRespuesta = this.respuestas.at(index).value;
+
+    if (pregunta.tipo === 'ABIERTA') {
+      respuestasParaEnviar.push({
+        id_pregunta: pregunta.id,
+        texto: valorRespuesta,
+      });
+    } else if (pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE') {
+      respuestasParaEnviar.push({
+        id_pregunta: pregunta.id,
+        texto: '',
+        numero: Number(valorRespuesta),
+      });
+    } else if (pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_MULTIPLE') {
+      Object.entries(valorRespuesta)
+        .filter(([_, seleccionado]) => seleccionado)
+        .forEach(([opcionId, _]) => {
+          respuestasParaEnviar.push({
+            id_pregunta: pregunta.id,
+            texto: '',
+            numero: Number(opcionId),
+          });
+        });
+    }
+  });
+
+  console.log('Payload para enviar:', respuestasParaEnviar);
+
+  this.encuestasService.enviarRespuestas(this.encuesta.id, respuestasParaEnviar).subscribe({
+    next: () => {
+      alert('Respuestas enviadas con éxito!');
+      this.formulario.reset();
+    },
+    error: (err) => {
+      console.error('Error al enviar respuestas:', err);
+      alert('Error al enviar respuestas.');
+    }
+  });
+}
 }
