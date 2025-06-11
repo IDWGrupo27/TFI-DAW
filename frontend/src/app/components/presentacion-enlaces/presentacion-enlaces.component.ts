@@ -50,16 +50,33 @@ export class PresentacionEnlacesComponent implements OnInit {
     })
   }
 
-  enlaceRespuesta(): string {
-    return `/respuesta?codigo=${this.codigoRespuesta}&encuesta=${this.idEncuesta}`
-  }
+ enlaceRespuesta(): string {
+  return `/responder/${this.idEncuesta}/${this.codigoRespuesta}`;
+}
 
-  enlaceResultado() {
-    return `/resultados?codigo=${this.codigoResultados}&encuesta=${this.idEncuesta}`
-  }
+enlaceResultado(): string {
+  return `/resultados/${this.idEncuesta}/${this.codigoResultados}`;
+}
 
   volver(): void {
     this.router.navigate(['/']);
   }
+
+  copiadoRespuesta = false;
+copiadoResultados = false;
+
+//Logica para copiar al portapapeles
+copiarAlPortapapeles(texto: string, tipo: 'respuesta' | 'resultados') {
+  navigator.clipboard.writeText(texto).then(() => {
+    if (tipo === 'respuesta') {
+      this.copiadoRespuesta = true;
+      setTimeout(() => this.copiadoRespuesta = false, 2000);
+    } else {
+      this.copiadoResultados = true;
+      setTimeout(() => this.copiadoResultados = false, 2000);
+    }
+  });
+}
+
 
 }

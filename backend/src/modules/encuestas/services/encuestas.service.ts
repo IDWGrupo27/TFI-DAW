@@ -4,7 +4,7 @@ import { Pregunta } from '../entities/pregunta.entity';
 import { Opcion } from '../entities/opcion.entity';
 import { DeepPartial, Repository } from 'typeorm';
 import { v4 } from 'uuid';
-
+import { NotFoundException } from '@nestjs/common';
 export class EncuestasService {
   constructor(
     @InjectRepository(Encuesta)
@@ -53,4 +53,18 @@ export class EncuestasService {
     Object.assign(existingEncuesta, encuesta);
     return this.encuestaRepository.save(existingEncuesta);
   }
+
+ async getEncuestaPorIdYCodigo(id: number, codigoRespuesta: string): Promise<Encuesta> {
+  const encuesta = await this.encuestaRepository.findOne({
+    where: { id, codigoRespuesta },
+    relations: ['preguntas', 'preguntas.opciones'],
+  });
+
+  if (!encuesta) {
+    throw new NotFoundException('Encuesta no encontrada con ese id y código');
+  }
+
+  return encuesta;
+}
+
 }

@@ -54,3 +54,13 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Ignorar configuración de Prettier
+.prettierrc
+
+# Ignorar archivo específico eslint.config.mjs
+/backend/eslint.config.mjs
+
+# Ignorar prettierrc y eslint
+backend/.prettierrc
+backend/eslint.config.mjs
