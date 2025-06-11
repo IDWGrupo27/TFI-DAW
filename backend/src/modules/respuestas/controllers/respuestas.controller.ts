@@ -18,7 +18,7 @@ export class RespuestasController {
     }
 
     @Post(':idEncuesta')
-    creatRespuesta(
+    createRespuesta(
         @Body() respuestas: CreateRespuesta[],
         @Param('idEncuesta') idEncuesta: number
     ){
