@@ -7,7 +7,7 @@ import { EncuestaDTO } from '../interfaces/encuesta.dto';
 @Injectable({ providedIn: 'root' })
 export class EncuestasService {
     private httpClient = inject(HttpClient);
-    
+
     crearEncuesta(dto: CreateEncuestaDTO): Observable<{
         id: number;
         codigoRespuesta: string;
@@ -19,13 +19,12 @@ export class EncuestasService {
             codigoResultados: string;
         }>('/api/v1/encuestas', dto)
     }
-   obtenerEncuestaPorIdYCodigo(id: number, codigoRespuesta: string): Observable<EncuestaDTO> {
-  return this.httpClient.get<EncuestaDTO>(`/api/v1/encuestas/${id}/por-codigo/${codigoRespuesta}`);
+    obtenerEncuestaPorIdYCodigo(id: number, codigoRespuesta: string): Observable<EncuestaDTO> {
+        return this.httpClient.get<EncuestaDTO>(`/api/v1/encuestas/${id}/por-codigo/${codigoRespuesta}`);
 
     }
-    enviarRespuestas(idEncuesta: number, respuestas: any[]): Observable<any> {
-  return this.httpClient.post(`/api/v1/respuestas-encuesta/${idEncuesta}`, respuestas);
-}
-
+    enviarRespuestas(idEncuesta: number, payload: any) {
+        return this.httpClient.post(`/api/v1/respuestas-encuesta/${idEncuesta}`, payload);
+    }
 
 }
