@@ -89,51 +89,62 @@ export class ResponderEncuestaComponent implements OnInit {
   }
 
   onSubmit() {
-  if (this.formulario.invalid) {
-    this.formulario.markAllAsTouched();
-    return;
+    if (this.formulario.invalid) {
+      this.formulario.markAllAsTouched();
+      return;
+    }
+
+    const respuestasPayload: any[] = [];
+
+    this.encuesta.preguntas.forEach((pregunta: any, index: number) => {
+      const valorRespuesta = this.respuestas.at(index).value;
+
+      if (pregunta.tipo === 'ABIERTA') {
+        respuestasPayload.push({
+          id_pregunta: pregunta.id,
+          texto: valorRespuesta
+        });
+      } else if (pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE') {
+        // valorRespuesta es el id de la opcion seleccionada.
+        const opcionSeleccionada = pregunta.opciones.find((opcion: any) => opcion.id === Number(valorRespuesta));
+        if (opcionSeleccionada) {
+          respuestasPayload.push({
+            id_pregunta: pregunta.id,
+            numero: opcionSeleccionada.numero
+          });
+        }
+      } else if (pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_MULTIPLE') {
+        // valorRespuesta es un objeto {idOpcion: boolean}
+        const numerosSeleccionados: number[] = [];
+
+        Object.entries(valorRespuesta)
+          .filter(([_, seleccionado]) => seleccionado)
+          .forEach(([opcionId, _]) => {
+            const opcion = pregunta.opciones.find((o: any) => o.id === Number(opcionId));
+            if (opcion) {
+              numerosSeleccionados.push(opcion.numero);
+            }
+          });
+
+        if (numerosSeleccionados.length > 0) {
+          respuestasPayload.push({
+            id_pregunta: pregunta.id,
+            numeros: numerosSeleccionados
+          });
+        }
+      }
+    });
+
+    this.encuestasService.enviarRespuestas(this.encuesta.id, respuestasPayload).subscribe({
+      next: () => {
+        alert('Respuestas enviadas con éxito!');
+        this.formulario.reset();
+      },
+      error: (err) => {
+        console.error('Error al enviar respuestas:', err);
+        alert('Error al enviar respuestas. Detalle en consola');
+      }
+    });
   }
 
-  const respuestasParaEnviar: any[] = [];
-
-  this.encuesta.preguntas.forEach((pregunta: any, index: number) => {
-    const valorRespuesta = this.respuestas.at(index).value;
-
-    if (pregunta.tipo === 'ABIERTA') {
-      respuestasParaEnviar.push({
-        id_pregunta: pregunta.id,
-        texto: valorRespuesta,
-      });
-    } else if (pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE') {
-      respuestasParaEnviar.push({
-        id_pregunta: pregunta.id,
-        texto: '',
-        numero: Number(valorRespuesta),
-      });
-    } else if (pregunta.tipo === 'OPCION_MULTIPLE_SELECCION_MULTIPLE') {
-      Object.entries(valorRespuesta)
-        .filter(([_, seleccionado]) => seleccionado)
-        .forEach(([opcionId, _]) => {
-          respuestasParaEnviar.push({
-            id_pregunta: pregunta.id,
-            texto: '',
-            numero: Number(opcionId),
-          });
-        });
-    }
-  });
-
-  console.log('Payload para enviar:', respuestasParaEnviar);
-
-  this.encuestasService.enviarRespuestas(this.encuesta.id, respuestasParaEnviar).subscribe({
-    next: () => {
-      alert('Respuestas enviadas con éxito!');
-      this.formulario.reset();
-    },
-    error: (err) => {
-      console.error('Error al enviar respuestas:', err);
-      alert('Error al enviar respuestas.');
-    }
-  });
-}
 }
