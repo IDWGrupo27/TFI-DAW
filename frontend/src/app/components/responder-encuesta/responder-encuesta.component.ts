@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-responder-encuesta',
@@ -34,7 +35,7 @@ export class ResponderEncuestaComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
   private encuestasService = inject(EncuestasService);
-
+  private router = inject(Router);
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = Number(params.get('id'));
@@ -137,12 +138,11 @@ export class ResponderEncuestaComponent implements OnInit {
 
     this.encuestasService.enviarRespuestas(this.encuesta.id, respuestasPayload).subscribe({
       next: () => {
-        alert('Respuestas enviadas con éxito!');
-        this.formulario.reset();
+        this.router.navigate(['/confirmar-envio']);
       },
       error: (err) => {
         console.error('Error al enviar respuestas:', err);
-        alert('Error al enviar respuestas. Detalle en consola');
+        alert('Error al enviar respuestas.Intente más tarde.');
       }
     });
   }

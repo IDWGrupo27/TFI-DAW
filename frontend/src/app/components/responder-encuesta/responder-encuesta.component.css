@@ -76,7 +76,7 @@ textarea.ng-invalid.ng-touched {
   font-weight: 500;
 }
 
-/* Para que los checkboxes y radios tengan espacio decente */
+
 .mat-checkbox,
 .mat-radio-button {
   margin-bottom: 8px;
