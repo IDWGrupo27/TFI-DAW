@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 import { Respuesta } from "../entitis/respuestas.entity";
 import { CreateRespuesta } from "../dtos/create-respuesta.dto";
 import { Pregunta } from "src/modules/encuestas/entities/pregunta.entity";
+import { Opcion } from "src/modules/encuestas/entities/opcion.entity";
 
 
 
@@ -19,7 +20,9 @@ export class RespuestasService{
     @InjectRepository(Respuesta_abierta)
     private readonly respuestaAbiertaRepository: Repository<Respuesta_abierta>,
     @InjectRepository(Pregunta)
-    private readonly preguntasRepository: Repository<Pregunta>){}
+    private readonly preguntasRepository: Repository<Pregunta>,
+    @InjectRepository(Opcion)
+    private readonly opcionRepository: Repository<Opcion>){}
 
     
     async getRespuestas() {
@@ -43,8 +46,47 @@ export class RespuestasService{
     }
 
     async createRespuesta(respuestas:CreateRespuesta[], idEncuesta: number) {
-        const preguntas = await this.preguntasRepository.find({
-            where: {id: idEncuesta}
+        const preguntas: Pregunta[] = await this.preguntasRepository.find({
+            where: {encuesta: {id: idEncuesta}},
+            relations: ['encuesta'],
         });
+
+        for(const resp of respuestas){
+
+            const pregunta: Pregunta | undefined = preguntas.find((preg) => resp.id_pregunta === preg.id);
+           
+           if(!pregunta){
+            continue 
+           }
+
+           const idRespuesta = await this.respuestaRepository.save({
+            encuesta: pregunta.encuesta
+           });
+
+           if(pregunta.tipo === 'ABIERTA') {
+            const guardarRespuesta = this.respuestaAbiertaRepository.create({
+                texto: resp.texto,
+                respuesta: idRespuesta,
+                pregunta: pregunta,
+                
+            });
+
+            await this.respuestaAbiertaRepository.save(guardarRespuesta);
+            
+           }  
+
+            const opciones: Opcion[] = await this.opcionRepository.find({
+                where: {pregunta: {id: pregunta.id}}
+            });
+
+            for(const opcion of opciones) {
+                if(resp.numero === opcion.numero)
+                await this.respuestaOpcionesRepository.save({
+                    respuesta: idRespuesta,
+                    opcion: {id: opcion.id}                 
+                });
+            }
+            
+        }
     }
 }
