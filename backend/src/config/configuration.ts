@@ -1,4 +1,8 @@
-export default () => ({
+export default () => {
+    
+    console.log(process.env.NODE_ENV);
+
+    return ({
     port: parseInt(process.env.PORT || '3000'),
     prefix: process.env.GLOBAL_PREFIX || 'api',
     swaggerHabilitado: process.env.SWAGGER_HABILITADO === 'true',
@@ -11,4 +15,4 @@ export default () => ({
         logging: process.env.DB_LOGGING || 'true',
         logger: process.env.DB_LOGGER,
     }
-})
+})}

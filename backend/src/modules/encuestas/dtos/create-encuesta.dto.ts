@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ArrayMinSize, IsArray, IsNotEmpty, IsString, ValidateNested } from "class-validator";
+import { ArrayMinSize, IsArray, IsBoolean, IsNotEmpty, IsString, ValidateNested } from "class-validator";
 import { CreatePreguntaDTO } from "./create-pregunta.dto";
 import { Type } from "class-transformer";
 
@@ -16,4 +16,8 @@ export class CreateEncuestaDTO {
     @ValidateNested({ each: true })
     @Type(() => CreatePreguntaDTO)
     preguntas: CreatePreguntaDTO[];
+
+    @ApiProperty()
+    @IsBoolean()
+    isPublica?: boolean;
 }

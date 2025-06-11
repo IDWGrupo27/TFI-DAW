@@ -23,7 +23,7 @@ import { RespuestasModule } from './modules/respuestas/respuestas.modules';
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
         autoLoadEntities: true,
-        synchronize: false,
+        synchronize: true,
         logging: configService.get<boolean>('database.logging'),
         logger: configService.get('database.logger'),
         /*host: 'localhost',
