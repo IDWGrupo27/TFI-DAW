@@ -10,7 +10,7 @@ export class MailService{
     ){}
 
   async enviarCorreo(correo: CreateCorreoDTO){
-    const url: string = `http://localhost:4200/responder/${correo.id_encuesta}/${correo.codigoRespuesta}`
+    const url: string = `http://localhost/responder/${correo.id_encuesta}/${correo.codigoRespuesta}`
     await this.mailerService.sendMail({
         to: correo.correo,
         subject: 'Encuesta creada!',
