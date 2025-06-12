@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EncuestasModule } from './modules/encuestas/encuestas.module';
 import configuration from './config/configuration';
 import { RespuestasModule } from './modules/respuestas/respuestas.modules';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { RespuestasModule } from './modules/respuestas/respuestas.modules';
     }),
     EncuestasModule,
     RespuestasModule,
+    MailModule
   ],
   controllers: [],
   providers: [],

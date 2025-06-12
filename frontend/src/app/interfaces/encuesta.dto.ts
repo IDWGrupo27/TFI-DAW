@@ -7,4 +7,6 @@ export interface EncuestaDTO {
   codigoRespuesta: string;
   codigoResultados: string | undefined;
   isPublica: boolean;
+  enviarCorreo: boolean;
+  correo?: string;
 }
