@@ -19,6 +19,9 @@ export class EncuestasService {
             codigoResultados: string;
         }>('/api/v1/encuestas', dto)
     }
+    obtenerEncuestasPublicas(): Observable<EncuestaDTO[]> {
+        return this.httpClient.get<EncuestaDTO[]>('/api/v1/encuestas?publicas=true');
+    }
     obtenerEncuestaPorIdYCodigo(id: number, codigoRespuesta: string): Observable<EncuestaDTO> {
         return this.httpClient.get<EncuestaDTO>(`/api/v1/encuestas/${id}/por-codigo/${codigoRespuesta}`);
 

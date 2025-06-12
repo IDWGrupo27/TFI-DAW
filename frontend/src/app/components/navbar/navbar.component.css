@@ -1,0 +1,19 @@
+.navbar {
+    display: flex;
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    margin-bottom: 1rem;
+}
+
+.navbar h1 {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, .15);
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0;
+
+    flex: 1;
+}
+
+.home-button {
+    background-color: var(--primary-color);
+}

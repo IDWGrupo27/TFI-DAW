@@ -1,0 +1,30 @@
+.encuestas-publicas-preview-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    padding: 1rem 2rem;
+    padding-bottom: 0rem;
+}
+
+.encuestas-publicas-preview-card-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.encuestas-publicas-preview-card-buttons button {
+    background-color: var(--primary-color);
+    color: black;
+}
+
+.encuestas-publicas-preview-card-title {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+}

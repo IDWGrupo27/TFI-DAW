@@ -1,30 +1,36 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { EncuestaPublicaPreviewComponent } from './encuesta-publica-preview/encuesta-publica-preview.component';
+import { EncuestasService } from '../../services/encuestas.service';
+import { EncuestaDTO } from '../../interfaces/encuesta.dto';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-encuestas-publicas',
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     MatCardModule,
-    MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatButtonModule,
     MatIconModule,
-    MatSnackBarModule,
+    EncuestaPublicaPreviewComponent,
   ],
   templateUrl: './encuestas-publicas.component.html',
   styleUrl: './encuestas-publicas.component.css',
 })
-export class EncuestasPublicasComponent {}
+export class EncuestasPublicasComponent {
+  public encuestas: EncuestaDTO[] = [];
+  private encuestasService = inject(EncuestasService);
+  ngOnInit(): void {
+    this.encuestasService.obtenerEncuestasPublicas().subscribe({
+      next: (data) => {
+        this.encuestas = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener encuestas públicas', err);
+      },
+    });
+  }
+}

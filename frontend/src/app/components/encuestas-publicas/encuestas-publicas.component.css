@@ -7,34 +7,5 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-
-}
-
-.encuestas-publicas-preview-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #e8e6f5;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-    margin-bottom: 1rem;
-}
-
-.encuestas-publicas-preview-card>h3 {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 400;
-    color: #333;
-}
-
-.encuestas-publicas-preview-card-buttons {
-    display: flex;
-    gap: 1rem;
-}
-
-.encuestas-publicas-card button {
-    background-color: #ffffff;
 }

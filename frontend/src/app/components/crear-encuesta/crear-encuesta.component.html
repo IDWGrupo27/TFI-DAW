@@ -14,7 +14,8 @@
         </div>
 
         <div formArrayName="preguntas">
-          <div *ngFor="let preguntaControl of preguntas.controls; let i = index" [formGroupName]="i" class="pregunta-container">
+          <div *ngFor="let preguntaControl of preguntas.controls; let i = index" [formGroupName]="i"
+            class="pregunta-container">
             <mat-card class="pregunta-card">
               <mat-card-content>
                 <h3>Pregunta {{ i + 1 }}</h3>
@@ -22,34 +23,30 @@
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Pregunta</mat-label>
                   <input matInput placeholder="Escriba su pregunta aquí" formControlName="texto">
-                  <mat-error *ngIf="preguntaControl.get('texto')?.hasError('required')">La pregunta es obligatoria</mat-error>
+                  <mat-error *ngIf="preguntaControl.get('texto')?.hasError('required')">La pregunta es
+                    obligatoria</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="crear-encuesta-select">
-                  <mat-label >Tipo de Pregunta</mat-label>
-                  <mat-select 
-                    formControlName="tipo">
-                    <mat-option 
-                      *ngFor="let tipo of getTipoPregunta()"
-                      [value]="tipo.tipo"
-                    >
+                  <mat-label>Tipo de Pregunta</mat-label>
+                  <mat-select formControlName="tipo">
+                    <mat-option *ngFor="let tipo of getTipoPregunta()" [value]="tipo.tipo">
                       {{ tipo.presentacion }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
 
-                <div 
-                  *ngIf="opcionTipoPregunta(preguntaControl.get('tipo')?.value)" 
-                  formArrayName="opciones"
-                >
+                <div *ngIf="opcionTipoPregunta(preguntaControl.get('tipo')?.value)" formArrayName="opciones">
                   <h4>Opciones</h4>
-                  <div *ngFor="let opcionControl of getOpciones(i).controls; let j = index" class="opcion-item" [formGroupName]="j">
+                  <div *ngFor="let opcionControl of getOpciones(i).controls; let j = index" class="opcion-item"
+                    [formGroupName]="j">
                     <mat-form-field appearance="outline" class="opcion-input">
                       <mat-label>Opción {{ j + 1 }}</mat-label>
                       <input matInput formControlName="texto">
-                      <mat-error *ngIf="opcionControl.get('texto')?.hasError('required')">La opción es obligatoria</mat-error>
+                      <mat-error *ngIf="opcionControl.get('texto')?.hasError('required')">La opción es
+                        obligatoria</mat-error>
                     </mat-form-field>
-                    
+
                     <button mat-icon-button color="warn" type="button" (click)="eliminarOpcion(i, j)">
                       <mat-icon>delete</mat-icon>
                     </button>
@@ -61,13 +58,18 @@
                 <!--<mat-checkbox formControlName="obligatoria">Obligatoria</mat-checkbox>-->
 
                 <div class="pregunta-actions">
-                  <button mat-icon-button color="accent" type="button" *ngIf="preguntas.controls.length > 1" (click)="eliminarPregunta(i)">
+                  <button mat-icon-button color="accent" type="button" *ngIf="preguntas.controls.length > 1"
+                    (click)="eliminarPregunta(i)">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
               </mat-card-content>
             </mat-card>
           </div>
+        </div>
+
+        <div class="is-publica">
+          <mat-checkbox formControlName="isPublica">Encuesta Pública</mat-checkbox>
         </div>
 
         <button mat-fab color="primary" type="button" aria-label="Agregar pregunta" (click)="agregarPregunta()">

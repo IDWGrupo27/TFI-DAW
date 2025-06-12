@@ -19,5 +19,5 @@ export class CreateEncuestaDTO {
 
     @ApiProperty()
     @IsBoolean()
-    isPublica?: boolean;
+    isPublica?: boolean = false;
 }

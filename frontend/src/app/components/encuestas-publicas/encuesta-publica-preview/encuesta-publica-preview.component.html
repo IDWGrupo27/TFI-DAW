@@ -1,0 +1,16 @@
+<mat-card class="encuestas-publicas-preview-card">
+    <div class="col50">
+        <div class="encuestas-publicas-preview-card-title">
+            <mat-icon>question_answer</mat-icon>
+            <span> {{encuesta.nombre}}</span>
+
+        </div>
+        <p>#{{encuesta.id}} - {{encuesta.preguntas.length}} pregunta{{encuesta.preguntas.length > 1 ? "s" : ""}}</p>
+    </div>
+    <div class="col50">
+        <div class="encuestas-publicas-preview-card-buttons">
+            <button mat-button (click)="navigateToResponder()"><mat-icon>playlist_add</mat-icon>Participar</button>
+            <button mat-button (click)="navigateToResultados()"><mat-icon>visibility</mat-icon>Ver resultados</button>
+        </div>
+    </div>
+</mat-card>
