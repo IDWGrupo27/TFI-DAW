@@ -3,6 +3,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { CrearEncuestaComponent } from './components/crear-encuesta/crear-encuesta.component';
 import { PresentacionEnlacesComponent } from './components/presentacion-enlaces/presentacion-enlaces.component';
 import { ResponderEncuestaComponent } from './components/responder-encuesta/responder-encuesta.component';
+import { VisualizarRespuestasComponent } from './components/visualizar-respuestas/visualizar-respuestas.component';
 export const routes: Routes = [
     {
         path: '',
@@ -17,7 +18,12 @@ export const routes: Routes = [
         component: PresentacionEnlacesComponent
     },
     {
-    path: 'responder/:id/:codigo',
-    component: ResponderEncuestaComponent
+        path: 'responder/:id/:codigo',
+        component: ResponderEncuestaComponent
+    },
+    {
+        path: 'resultados/:id/:codigo',
+        component: VisualizarRespuestasComponent
     }
+    
 ];

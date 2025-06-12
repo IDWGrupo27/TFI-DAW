@@ -34,16 +34,37 @@ export class RespuestasService {
   }
 
  async getRespuestasByEncuestaId(encuestaId: number) {
-  return this.respuestaRepository.find({
+  const respuestas = await this.respuestaRepository.find({
     where: {
       encuesta: { id: encuestaId }
     },
     relations: {
-      respuestas_abierta: true,
-      respuestas_opciones: true,
+      respuestas_abierta: {
+        pregunta: true
+      },
+      respuestas_opciones: {
+        opcion: {
+          pregunta:true
+        }
+      },
       encuesta: true,
     },
   });
+
+  return respuestas.map(respuesta => ({
+    id: respuesta.id,
+    encuesta: respuesta.encuesta,
+    respuestas_abiertas: respuesta.respuestas_abierta.map(abierta => ({
+      id: abierta.id,
+      respuesta_texto: abierta.texto,
+      pregunta_texto: abierta.pregunta.texto
+    })),
+    respuestas_opciones: respuesta.respuestas_opciones.map(opc => ({
+      id: opc.id,
+      opcion_seleccionada: opc.opcion,
+      pregunta_texto: opc.opcion.pregunta.texto
+    })),
+  }));
 }
 
 async createRespuesta(respuestas: CreateRespuesta[], idEncuesta: number) {
