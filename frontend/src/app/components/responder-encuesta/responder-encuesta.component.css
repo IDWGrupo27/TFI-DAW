@@ -81,3 +81,13 @@ textarea.ng-invalid.ng-touched {
 .mat-radio-button {
   margin-bottom: 8px;
 }
+
+@media (max-width: 600px) {
+  .responder-encuesta-header {
+    font-size: 20px;
+    padding: 8px 12px;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}

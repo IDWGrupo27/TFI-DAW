@@ -82,3 +82,54 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.8) !important;
 }
+
+@media screen and (max-width: 768px) {
+  .inicio-container {
+    width: 100%;
+    flex-direction: column;
+    padding: 20px 20px; /* Antes era 20px 10px */
+    box-sizing: border-box;
+  }
+
+  .inicio-card {
+    width: 100%;
+    border-radius: 12px;
+    padding: 0 12px; /* Esto es nuevo */
+    box-sizing: border-box;
+  }
+
+  .inicio-header {
+    padding: 24px 16px;
+  }
+
+  .inicio-title {
+    font-size: 24px !important;
+  }
+
+  .inicio-content {
+    padding: 24px 16px !important;
+    border-left: 4px solid #667eea;
+  }
+
+  .caracteristica-item {
+    font-size: 16px;
+  }
+
+  .caracteristica-icon {
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .inicio-actions {
+    padding: 16px !important;
+    margin-top: 24px;
+    flex-direction: column;
+  }
+
+  .comenzar-button {
+    width: 100%;
+    max-width: 280px;
+    font-size: 1rem;
+  }
+}

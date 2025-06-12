@@ -41,7 +41,7 @@ export class PresentacionEnlacesComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+      this.route.queryParams.subscribe(params => {
       this.idEncuesta = params['id-encuesta'] || '';
       this.codigoRespuesta = params['codigo-respuesta'] || '';
       this.codigoResultados = params['codigo-resultados'] || '';
