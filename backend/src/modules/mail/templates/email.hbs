@@ -9,26 +9,35 @@
             font-size: 2em;
         }
 
-        div {
-          display: flex;
-          border-top: 8px solid #04166a; 
-          padding: 20px;
-          padding-right: -10px;
-          border-radius: 16px 16px 0 0; 
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          background-color: #fafafa;
-          justify-content: center;
-          align-content: center;
+       body {
+           display: flex;
+           flex-direction: column;
+           border-top: 8px solid #04166a;
+           padding: 20px;
+           border-radius: 16px 16px 0 0;
+           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+           background-color: #fafafa;
+           justify-content: center;
+           align-items: center;
         }
+
+        div * {
+           display: block;
+           width: 100%;
+        }
+
+
     </style>
 </head>
 
 <body>
  <div> 
     <h3>Tu encuesta: {{nombreEncuesta}} fue creada con exito!!!</h3>
+    <br>
     <p>
      Enviale el siguiente link a las personas que quieras que contesten tu encuesta
     </p>
+    <br>
     <h4> {{codigo}} </h4>
  </div>
 </body>
