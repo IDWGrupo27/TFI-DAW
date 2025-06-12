@@ -11,19 +11,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-presentacion-enlaces',
   imports: [
-    MatCardModule, 
-    MatIconModule, 
+    MatCardModule,
+    MatIconModule,
     MatFormFieldModule,
     MatListModule,
     MatExpansionModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './presentacion-enlaces.component.html',
-  styleUrl: './presentacion-enlaces.component.css'
+  styleUrl: './presentacion-enlaces.component.css',
 })
 export class PresentacionEnlacesComponent implements OnInit {
-
   idEncuesta: string = '';
   codigoRespuesta: string = '';
   codigoResultados: string = '';
@@ -32,12 +31,12 @@ export class PresentacionEnlacesComponent implements OnInit {
 
   private route: ActivatedRoute = inject(ActivatedRoute);
 
-  private router: Router = inject(Router)
+  private router: Router = inject(Router);
 
   constructor() {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.idEncuesta = params['id-encuesta'] || '';
       this.codigoRespuesta = params['codigo-respuesta'] || '';
       this.codigoResultados = params['codigo-resultados'] || '';
@@ -45,21 +44,32 @@ export class PresentacionEnlacesComponent implements OnInit {
       console.log('Parámetros recibidos:', {
         idEncuesta: this.idEncuesta,
         codigoRespuesta: this.codigoRespuesta,
-        codigoResultados: this.codigoResultados
+        codigoResultados: this.codigoResultados,
       });
-    })
+    });
   }
 
   enlaceRespuesta(): string {
-    return `/respuesta?codigo=${this.codigoRespuesta}&encuesta=${this.idEncuesta}`
+    return `/respuesta?codigo=${this.codigoRespuesta}&encuesta=${this.idEncuesta}`;
   }
 
   enlaceResultado() {
-    return `/resultados?codigo=${this.codigoResultados}&encuesta=${this.idEncuesta}`
+    return `/resultados?codigo=${this.codigoResultados}&encuesta=${this.idEncuesta}`;
   }
 
   volver(): void {
     this.router.navigate(['/']);
   }
 
+  enlaceCSVRespuestas(): string {
+    const enlace = `${this.window}/api/encuestas/${this.idEncuesta}/csv-respuestas`;
+    console.log('Enlace CSV Respuestas:', enlace);
+    return enlace;
+  }
+
+  enlaceCSVResultados(): string {
+    const enlace = `${this.window}/api/encuestas/${this.idEncuesta}/csv-resultados`;
+    console.log('Enlace CSV Resultados:', enlace);
+    return enlace;
+  }
 }
