@@ -87,3 +87,16 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.enviar-correo-container {
+  margin-top: 20px;
+  padding: 20px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05); 
+  background-color: #fafafa;
+  border-radius: 8px;
+  overflow: hidden;
+}

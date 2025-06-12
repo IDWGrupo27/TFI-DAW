@@ -49,7 +49,9 @@ export class CrearEncuestaComponent implements OnInit {
     this.encuestaForm = this.fb.group({
       nombre: ['', Validators.required],
       preguntas: this.fb.array([]),
-      isPublica: [false, Validators.required]
+      isPublica: [false, Validators.required],
+      enviarCorreo: [false, Validators.required],
+      correo: ['']
     });
   }
 

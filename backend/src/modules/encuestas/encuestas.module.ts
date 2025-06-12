@@ -5,9 +5,10 @@ import { Pregunta } from "./entities/pregunta.entity";
 import { Opcion } from "./entities/opcion.entity";
 import { EncuestasController } from './controllers/encuestas.controller';
 import { EncuestasService } from "./services/encuestas.service";
+import { MailModule } from "../mail/mail.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Encuesta, Pregunta, Opcion])],
+    imports: [TypeOrmModule.forFeature([Encuesta, Pregunta, Opcion]), MailModule],
     controllers:[EncuestasController],
     providers:[EncuestasService]
 })

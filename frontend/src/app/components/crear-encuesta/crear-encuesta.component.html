@@ -77,6 +77,16 @@
             <mat-checkbox formControlName="isPublica">Encuesta Pública</mat-checkbox>
           </div>
 
+          <div class="enviar-correo-container">
+          <mat-checkbox formControlName="enviarCorreo">Enviar encuesta a mi correo</mat-checkbox>
+             <div *ngIf="encuestaForm.get('enviarCorreo')?.value">
+              <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Correo Electronico</mat-label>
+                  <input matInput type="email" placeholder="Ingrese su correo electronico aquí" formControlName="correo">
+                </mat-form-field>
+             </div>
+          </div>
+
         <div class="crear-encuesta-actions">
           <button mat-raised-button color="primary" type="submit">Crear Encuesta</button>
         </div>
