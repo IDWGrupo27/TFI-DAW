@@ -8,7 +8,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
     padding: 1rem 2rem;
-    padding-bottom: 0rem;
     transition: .25s ease-in-out;
 }
 
@@ -28,8 +27,26 @@
 
 .encuestas-publicas-preview-card-title {
     display: flex;
-    align-items: end;
+    align-items: center;
     gap: 1rem;
     font-size: 20px;
     margin-bottom: 0.5rem;
+}
+
+.encuestas-publicas-preview-card-title .id {
+    color: rgb(104, 104, 104);
+    font-size: 16px;
+}
+
+.encuestas-publicas-preview-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.encuestas-publicas-preview-card-info div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
