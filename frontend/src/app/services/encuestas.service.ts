@@ -30,4 +30,7 @@ export class EncuestasService {
         return this.httpClient.post(`/api/v1/respuestas-encuesta/${idEncuesta}`, payload);
     }
 
+    obtenerResultadosEncuestaId(id: number): Observable<any[]> {
+        return this.httpClient.get<any[]>(`/api/v1/respuestas-encuesta/${id}`);
+    }
 }

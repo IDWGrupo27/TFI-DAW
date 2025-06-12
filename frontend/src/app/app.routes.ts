@@ -3,9 +3,13 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { CrearEncuestaComponent } from './components/crear-encuesta/crear-encuesta.component';
 import { PresentacionEnlacesComponent } from './components/presentacion-enlaces/presentacion-enlaces.component';
 import { ResponderEncuestaComponent } from './components/responder-encuesta/responder-encuesta.component';
+<<<<<<< HEAD
 import { ConfirmarEnvioComponent } from './confirmar-envio/confirmar-envio.component';
 import { EncuestasPublicasComponent } from './components/encuestas-publicas/encuestas-publicas.component';
 
+=======
+import { VisualizarRespuestasComponent } from './components/visualizar-respuestas/visualizar-respuestas.component';
+>>>>>>> ac11c496e926e877e3db3825968e6f937d16142a
 export const routes: Routes = [
     {
         path: '',
@@ -24,11 +28,17 @@ export const routes: Routes = [
         component: ResponderEncuestaComponent
     },
     {
+<<<<<<< HEAD
         path: 'confirmar-envio',
         component: ConfirmarEnvioComponent
     },
     {
         path: 'encuestas-publicas',
         component: EncuestasPublicasComponent
+=======
+        path: 'resultados/:id/:codigo',
+        component: VisualizarRespuestasComponent
+>>>>>>> ac11c496e926e877e3db3825968e6f937d16142a
     }
+    
 ];
