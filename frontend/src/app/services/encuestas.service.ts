@@ -1,34 +1,30 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { CreateEncuestaDTO } from '../interfaces/create-encuesta.dto';
-import { Observable } from 'rxjs';
-
-interface createEncuestaResponse {
-  id: number;
-  codigoRespuesta: string;
-  codigoResultados: string;
-}
-
-interface EncuestaPublica {
-  id: number;
-  nombre: string;
-  codigoRespuesta: string;
-  codigoResultados: string;
-  preguntas: any[];
-}
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
+import { CreateEncuestaDTO } from "../interfaces/create-encuesta.dto";
+import { Observable } from "rxjs";
+import { EncuestaDTO } from '../interfaces/encuesta.dto';
 
 @Injectable({ providedIn: 'root' })
 export class EncuestasService {
-  private httpClient = inject(HttpClient);
+    private httpClient = inject(HttpClient);
 
-  getEncuestasPublicas(): Observable<EncuestaPublica[]> {
-    return this.httpClient.get<EncuestaPublica[]>('/api/v1/encuestas/publicas');
-  }
+    crearEncuesta(dto: CreateEncuestaDTO): Observable<{
+        id: number;
+        codigoRespuesta: string;
+        codigoResultados: string;
+    }> {
+        return this.httpClient.post<{
+            id: number;
+            codigoRespuesta: string;
+            codigoResultados: string;
+        }>('/api/v1/encuestas', dto)
+    }
+    obtenerEncuestaPorIdYCodigo(id: number, codigoRespuesta: string): Observable<EncuestaDTO> {
+        return this.httpClient.get<EncuestaDTO>(`/api/v1/encuestas/${id}/por-codigo/${codigoRespuesta}`);
 
-  crearEncuesta(dto: CreateEncuestaDTO): Observable<createEncuestaResponse> {
-    return this.httpClient.post<createEncuestaResponse>(
-      '/api/v1/encuestas',
-      dto,
-    );
-  }
+    }
+    enviarRespuestas(idEncuesta: number, payload: any) {
+        return this.httpClient.post(`/api/v1/respuestas-encuesta/${idEncuesta}`, payload);
+    }
+
 }

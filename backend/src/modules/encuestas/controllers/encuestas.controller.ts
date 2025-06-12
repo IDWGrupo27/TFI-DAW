@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put,Param } from '@nestjs/common';
 import { EncuestasService } from '../services/encuestas.service';
 import { CreateEncuestaDTO } from '../dtos/create-encuesta.dto';
 
@@ -24,4 +24,13 @@ export class EncuestasController {
   updateEncuesta(@Body() dto: CreateEncuestaDTO) {
     return this.encuestasService.updateEncuesta(dto);
   }
+
+  @Get(':id/por-codigo/:codigoRespuesta')
+async getEncuestaPorIdYCodigo(
+  @Param('id') id: number,
+  @Param('codigoRespuesta') codigoRespuesta : string,
+) {
+  return this.encuestasService.getEncuestaPorIdYCodigo(id, codigoRespuesta );
+}
+
 }

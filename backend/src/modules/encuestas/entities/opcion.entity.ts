@@ -22,7 +22,7 @@ export class Opcion {
   numero: number;
 
   @ManyToOne(() => Pregunta)
-  @JoinColumn({ name: 'id_preguta' })
+  @JoinColumn({ name: 'id_pregunta' })
   @Exclude()
   pregunta: Pregunta;
 

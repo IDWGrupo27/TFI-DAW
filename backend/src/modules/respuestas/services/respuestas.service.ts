@@ -6,12 +6,11 @@ import { Repository } from "typeorm";
 import { Respuesta } from "../entitis/respuestas.entity";
 import { CreateRespuesta } from "../dtos/create-respuesta.dto";
 import { Pregunta } from "src/modules/encuestas/entities/pregunta.entity";
-
-
+import { Opcion } from "src/modules/encuestas/entities/opcion.entity";
 
 @Injectable()
-export class RespuestasService{
-    constructor(
+export class RespuestasService {
+  constructor(
     @InjectRepository(Respuesta)
     private readonly respuestaRepository: Repository<Respuesta>,
     @InjectRepository(Respuesta_opciones)
@@ -19,32 +18,108 @@ export class RespuestasService{
     @InjectRepository(Respuesta_abierta)
     private readonly respuestaAbiertaRepository: Repository<Respuesta_abierta>,
     @InjectRepository(Pregunta)
-    private readonly preguntasRepository: Repository<Pregunta>){}
+    private readonly preguntasRepository: Repository<Pregunta>,
+    @InjectRepository(Opcion)
+    private readonly opcionRepository: Repository<Opcion>
+  ) {}
+
+  async getRespuestas() {
+    return this.respuestaRepository.find({
+      relations: {
+        encuesta: true,
+        respuestas_abierta: true,
+        respuestas_opciones: true,
+      },
+    });
+  }
+
+ async getRespuestasByEncuestaId(encuestaId: number) {
+  return this.respuestaRepository.find({
+    where: {
+      encuesta: { id: encuestaId }
+    },
+    relations: {
+      respuestas_abierta: true,
+      respuestas_opciones: true,
+      encuesta: true,
+    },
+  });
+}
+
+async createRespuesta(respuestas: CreateRespuesta[], idEncuesta: number) {
+  const preguntas: Pregunta[] = await this.preguntasRepository.find({
+    where: { encuesta: { id: idEncuesta } },
+    relations: ["encuesta"],
+  });
+
+  // Agrupar respuestas por pregunta
+  const respuestasPorPregunta = respuestas.reduce((acc, resp) => {
+    if (!acc[resp.id_pregunta]) {
+      acc[resp.id_pregunta] = [];
+    }
+    acc[resp.id_pregunta].push(resp);
+    return acc;
+  }, {} as Record<number, CreateRespuesta[]>);
+
+  for (const idPreguntaStr of Object.keys(respuestasPorPregunta)) {
+    const idPregunta = parseInt(idPreguntaStr);
+    const pregunta = preguntas.find(preg => preg.id === idPregunta);
+    if (!pregunta) continue;
 
     
-    async getRespuestas() {
-        return this.respuestaRepository.find({
-            relations: {
-                encuesta: true,
-                respuestas_abierta: true,
-                respuestas_opciones: true
-            }
-        });
-    }
+    const respuestaGuardada = await this.respuestaRepository.save({
+      encuesta: pregunta.encuesta,
+    });
 
-    async getRespuestasByEncuestaId(id: number) {
-        return this.respuestaRepository.findOne({
-            where: {id},
-            relations: {
-                respuestas_abierta: true,
-                respuestas_opciones: true
-            }
+    // Procesar todas las respuestas para esta pregunta
+    for (const resp of respuestasPorPregunta[idPregunta]) {
+      if (pregunta.tipo === "ABIERTA") {
+        const guardarRespuesta = this.respuestaAbiertaRepository.create({
+          texto: resp.texto,
+          respuesta: respuestaGuardada,
+          pregunta: pregunta,
         });
-    }
+        await this.respuestaAbiertaRepository.save(guardarRespuesta);
+      } else {
+        if (
+          (resp.numero !== undefined && resp.numero !== null) &&
+          (resp.numeros && resp.numeros.length > 0)
+        ) {
+          throw new Error(
+            `Respuesta inválida: no puede tener 'numero' y 'numeros' simultáneamente en la pregunta ${pregunta.id}`
+          );
+        }
 
-    async createRespuesta(respuestas:CreateRespuesta[], idEncuesta: number) {
-        const preguntas = await this.preguntasRepository.find({
-            where: {id: idEncuesta}
+        const opciones: Opcion[] = await this.opcionRepository.find({
+          where: { pregunta: { id: pregunta.id } },
         });
+
+        if (resp.numero !== undefined && resp.numero !== null) {
+          // Opción única
+          const opcion = opciones.find((o) => o.numero === resp.numero);
+          if (opcion) {
+            await this.respuestaOpcionesRepository.save({
+              respuesta: respuestaGuardada,
+              opcion: { id: opcion.id },
+            });
+          }
+        }
+
+        if (resp.numeros && resp.numeros.length > 0) {
+          // Opción múltiple
+          for (const num of resp.numeros) {
+            const opcion = opciones.find((o) => o.numero === num);
+            if (opcion) {
+              await this.respuestaOpcionesRepository.save({
+                respuesta: respuestaGuardada,
+                opcion: { id: opcion.id },
+              });
+            }
+          }
+        }
+      }
     }
+  }
+}
+
 }

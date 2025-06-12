@@ -19,16 +19,25 @@
       </mat-card-header>
       
       <mat-card-content>
-        <div class="enlace-container">
-          <mat-form-field appearance="outline" class="enlace-field">
+        <!-- Input + botón copiar -->
+        <div class="enlace-container" style="display: flex; align-items: center;">
+          <mat-form-field appearance="outline" class="enlace-field" style="flex-grow: 1; margin-right: 8px;">
             <mat-label>URL para Responder</mat-label>
             <input 
               matInput
               [value]="window + enlaceRespuesta()" 
               readonly
             >
-            <mat-icon matSuffix>content_copy</mat-icon>
           </mat-form-field>
+          <button mat-icon-button (click)="copiarAlPortapapeles(window + enlaceRespuesta(), 'respuesta')" color="primary" matTooltip="Copiar enlace">
+            <mat-icon>{{ copiadoRespuesta ? 'check' : 'content_copy' }}</mat-icon>
+          </button>
+        </div>
+
+        <!-- QR para Responder -->
+        <div style="margin-top: 16px; display: flex; justify-content: center;">
+          <qrcode [qrdata]="window + enlaceRespuesta()" [errorCorrectionLevel]="'M'"></qrcode>
+
         </div>
       </mat-card-content>
     </mat-card>
@@ -46,16 +55,25 @@
       </mat-card-header>
       
       <mat-card-content>
-        <div class="enlace-container">
-          <mat-form-field appearance="outline" class="enlace-field">
+        <!-- Input + botón copiar -->
+        <div class="enlace-container" style="display: flex; align-items: center;">
+          <mat-form-field appearance="outline" class="enlace-field" style="flex-grow: 1; margin-right: 8px;">
             <mat-label>URL para Resultados</mat-label>
             <input 
               matInput
               [value]="window + enlaceResultado()" 
               readonly
             >
-            <mat-icon matSuffix>content_copy</mat-icon>
           </mat-form-field>
+          <button mat-icon-button (click)="copiarAlPortapapeles(window + enlaceResultado(), 'resultados')" color="primary" matTooltip="Copiar enlace">
+            <mat-icon>{{ copiadoResultados ? 'check' : 'content_copy' }}</mat-icon>
+          </button>
+        </div>
+
+        <!-- QR para Resultados -->
+        <div style="margin-top: 16px; display: flex; justify-content: center;">
+          <qrcode [qrdata]="window + enlaceResultado()" [errorCorrectionLevel]="'M'"></qrcode>
+
         </div>
       </mat-card-content>
     </mat-card>
