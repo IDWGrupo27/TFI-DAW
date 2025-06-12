@@ -5,6 +5,7 @@ import { Opcion } from '../entities/opcion.entity';
 import { DeepPartial, FindManyOptions, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import { NotFoundException } from '@nestjs/common';
+import { instanceToPlain } from 'class-transformer';
 export class EncuestasService {
   constructor(
     @InjectRepository(Encuesta)

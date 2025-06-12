@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put,Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put,Param, Query } from '@nestjs/common';
 import { EncuestasService } from '../services/encuestas.service';
 import { CreateEncuestaDTO } from '../dtos/create-encuesta.dto';
 
