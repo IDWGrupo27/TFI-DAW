@@ -3,12 +3,17 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: white;
+    background-color: color-mix(in srgb, var(--primary-color), white 80%);
     border: 1px solid var(--primary-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
     padding: 1rem 2rem;
     padding-bottom: 0rem;
+    transition: .25s ease-in-out;
+}
+
+.encuestas-publicas-preview-card:hover {
+    background-color: color-mix(in srgb, var(--primary-color), white 60%);
 }
 
 .encuestas-publicas-preview-card-buttons {
