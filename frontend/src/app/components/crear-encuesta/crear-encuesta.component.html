@@ -66,15 +66,16 @@
               </mat-card-content>
             </mat-card>
           </div>
-        </div>
-
-        <div class="is-publica">
-          <mat-checkbox formControlName="isPublica">Encuesta Pública</mat-checkbox>
-        </div>
-
-        <button mat-fab color="primary" type="button" aria-label="Agregar pregunta" (click)="agregarPregunta()">
-          <mat-icon>add</mat-icon>
-        </button>
+          </div>
+          
+          
+          
+          <div class="settings">
+            <button mat-fab color="primary" type="button" aria-label="Agregar pregunta" (click)="agregarPregunta()">
+              <mat-icon>add</mat-icon>
+            </button>
+            <mat-checkbox formControlName="isPublica">Encuesta Pública</mat-checkbox>
+          </div>
 
         <div class="crear-encuesta-actions">
           <button mat-raised-button color="primary" type="submit">Crear Encuesta</button>

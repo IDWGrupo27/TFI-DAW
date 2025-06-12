@@ -81,3 +81,9 @@
 .crear-encuesta-select {
   margin-top: 20px;
 }
+
+.settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
