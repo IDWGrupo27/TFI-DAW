@@ -62,7 +62,8 @@ export class RespuestasService {
     respuestas_opciones: respuesta.respuestas_opciones.map(opc => ({
       id: opc.id,
       opcion_seleccionada: opc.opcion,
-      pregunta_texto: opc.opcion.pregunta.texto
+      pregunta_texto: opc.opcion.pregunta.texto,
+      pregunta_tipo: opc.opcion.pregunta.tipo
     })),
   }));
 }

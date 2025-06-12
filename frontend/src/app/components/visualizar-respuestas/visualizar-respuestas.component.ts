@@ -65,7 +65,7 @@ export class VisualizarRespuestasComponent implements OnInit {
     // Obtener información de la encuesta
     this.encuestaInfo = this.resultados[0].encuesta;
     this.totalRespuestas = this.resultados.length;
-
+    
     // Procesar respuestas de opciones múltiples
     const respuestasOpciones = this.resultados
       .filter(resultado => resultado.respuestas_opciones.length > 0)
@@ -80,64 +80,74 @@ export class VisualizarRespuestasComponent implements OnInit {
 
     // Agrupar respuestas por pregunta
     this.datosVisualizacion = {
-      opcionesMultiples: this.agruparRespuestasOpciones(respuestasOpciones),
-      respuestasAbiertas: this.agruparRespuestasAbiertas(respuestasAbiertas)
-    };
+  opcionesUnicas: this.agruparRespuestasOpciones(
+    respuestasOpciones.filter(r => r.pregunta_tipo === 'OPCION_MULTIPLE_SELECCION_SIMPLE')
+  ),
+  opcionesMultiples: this.agruparRespuestasOpciones(
+    respuestasOpciones.filter(r => r.pregunta_tipo === 'OPCION_MULTIPLE_SELECCION_MULTIPLE')
+  ),
+  respuestasAbiertas: this.agruparRespuestasAbiertas(respuestasAbiertas)
+};
 
     console.log('Datos procesados:', this.datosVisualizacion);
   }
 
-  private agruparRespuestasOpciones(respuestas: any[]): any[] {
+ private agruparRespuestasOpciones(respuestas: any[]): any[] {
 
-    console.log(respuestas)
+  console.log(respuestas)
 
-    const agrupadas = respuestas.reduce((acc, respuesta) => {
-      /*const preguntaId = respuesta.pregunta?.id || respuesta.pregunta_id;
-      const preguntaTexto = respuesta.pregunta?.texto || respuesta.pregunta_texto || `Pregunta ${preguntaId}`;
-      const opcionTexto = respuesta.opcion?.texto || respuesta.opcion_texto || 'Sin especificar';*/
-      const preguntaId = respuesta.id || respuesta.pregunta_id;
-      const preguntaTexto = respuesta.pregunta_texto; // Ajustalo si tenés acceso a más texto
-      const opcionTexto = respuesta.opcion_seleccionada?.texto || 'Sin especificar';
+  const agrupadas = respuestas.reduce((acc, respuesta) => {
+    // Código original (usaba id para agrupar, que no existía o no servía):
+    /*
+    const preguntaId = respuesta.id || respuesta.pregunta_id;
+    const preguntaTexto = respuesta.pregunta_texto; // Ajustalo si tenés acceso a más texto
+    const opcionTexto = respuesta.opcion_seleccionada?.texto || 'Sin especificar';
+    */
 
-      console.log(preguntaId)
-      console.log(preguntaTexto)
-      console.log(opcionTexto)
+    // Corrección: uso el texto de la pregunta como clave para agrupar
+    const preguntaId = respuesta.pregunta_texto; 
+    const preguntaTexto = respuesta.pregunta_texto;
+    const opcionTexto = respuesta.opcion_seleccionada?.texto || 'Sin especificar';
 
-      if (!acc[preguntaId]) {
-        acc[preguntaId] = {
-          pregunta: preguntaTexto,
-          opciones: {},
-          totalRespuestas: 0
-        };
-      }
+    console.log('PreguntaId (texto usado como clave):', preguntaId)
+    console.log('PreguntaTexto:', preguntaTexto)
+    console.log('OpcionTexto:', opcionTexto)
 
-      if (!acc[preguntaId].opciones[opcionTexto]) {
-        acc[preguntaId].opciones[opcionTexto] = 0;
-      }
-
-      acc[preguntaId].opciones[opcionTexto]++;
-      acc[preguntaId].totalRespuestas++;
-
-      return acc;
-    }, {});
-
-    // Convertir a array y calcular porcentajes
-    return Object.keys(agrupadas).map(preguntaId => {
-      const pregunta = agrupadas[preguntaId];
-      const opcionesConPorcentaje = Object.keys(pregunta.opciones).map(opcion => ({
-        texto: opcion,
-        cantidad: pregunta.opciones[opcion],
-        porcentaje: ((pregunta.opciones[opcion] / pregunta.totalRespuestas) * 100).toFixed(1)
-      }));
-
-      return {
-        preguntaId: preguntaId,
-        pregunta: pregunta.pregunta,
-        opciones: opcionesConPorcentaje,
-        totalRespuestas: pregunta.totalRespuestas
+    if (!acc[preguntaId]) {
+      acc[preguntaId] = {
+        pregunta: preguntaTexto,
+        opciones: {},
+        totalRespuestas: 0
       };
-    });
-  }
+    }
+
+    if (!acc[preguntaId].opciones[opcionTexto]) {
+      acc[preguntaId].opciones[opcionTexto] = 0;
+    }
+
+    acc[preguntaId].opciones[opcionTexto]++;
+    acc[preguntaId].totalRespuestas++;
+
+    return acc;
+  }, {});
+
+  // Convertir a array y calcular porcentajes
+  return Object.keys(agrupadas).map(preguntaId => {
+    const pregunta = agrupadas[preguntaId];
+    const opcionesConPorcentaje = Object.keys(pregunta.opciones).map(opcion => ({
+      texto: opcion,
+      cantidad: pregunta.opciones[opcion],
+      porcentaje: ((pregunta.opciones[opcion] / pregunta.totalRespuestas) * 100).toFixed(1)
+    }));
+
+    return {
+      preguntaId: preguntaId, // Acá el "ID" es el texto de la pregunta
+      pregunta: pregunta.pregunta,
+      opciones: opcionesConPorcentaje,
+      totalRespuestas: pregunta.totalRespuestas
+    };
+  });
+}
 
   private agruparRespuestasAbiertas(respuestas: any[]): any[] {
     const agrupadas = respuestas.reduce((acc, respuesta) => {
