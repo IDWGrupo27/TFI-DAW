@@ -15,7 +15,7 @@ async function bootstrap() {
   const globalPrefix: string = configService.get('prefix') as string;
 
   app.setGlobalPrefix(globalPrefix);
-  
+
   app.enableVersioning({
     type: VersioningType.URI,
     defaultVersion: '1'
@@ -29,6 +29,11 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors( new ClassSerializerInterceptor(app.get(Reflector)));
+
+  // Acá activás CORS
+ app.enableCors({
+  origin: '*', 
+});
 
   const swaggerHabilitado: boolean = configService.get('swaggerHabilitado') as boolean;
 
