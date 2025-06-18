@@ -1,10 +1,14 @@
 import { Body, Controller, Get, Post, Put,Param, Query } from '@nestjs/common';
 import { EncuestasService } from '../services/encuestas.service';
 import { CreateEncuestaDTO } from '../dtos/create-encuesta.dto';
+import { MailService } from 'src/modules/mail/services/mail.service';
+import { CreateCorreoDTO } from 'src/modules/mail/dtos/create-correo.dto';
 
 @Controller('encuestas')
 export class EncuestasController {
-  constructor(private readonly encuestasService: EncuestasService) {}
+  constructor(
+    private readonly encuestasService: EncuestasService,
+  ) {}
 
   @Get()
   getEncuestas(@Query('publicas') publicas?: boolean) {
@@ -17,7 +21,8 @@ export class EncuestasController {
     codigoRespuesta: string;
     codigoResultados: string;
   }> {
-    return await this.encuestasService.createEncuesta(dto);
+    const datosCorreo = {...dto};
+    return await this.encuestasService.createEncuesta(dto, datosCorreo);
   }
 
   @Put()

@@ -14,5 +14,10 @@ export default () => {
         name: process.env.DB_NAME,
         logging: process.env.DB_LOGGING || 'true',
         logger: process.env.DB_LOGGER,
+    },
+    mail: {
+        emailHost: process.env.MAIL_HOST,
+        user: process.env.MAIL_USER,
+        emailPassword: process.env.MAIL_PASSWORD
     }
 })}
