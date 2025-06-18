@@ -7,8 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
-
-
 import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
@@ -41,7 +39,7 @@ export class PresentacionEnlacesComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+      this.route.queryParams.subscribe(params => {
       this.idEncuesta = params['id-encuesta'] || '';
       this.codigoRespuesta = params['codigo-respuesta'] || '';
       this.codigoResultados = params['codigo-resultados'] || '';
